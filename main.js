@@ -76,6 +76,7 @@ function imprimirTabla(){
         let inputSelect = document.createElement('input');
         inputSelect.type = 'radio';
         inputSelect.value = list[i].id;
+        inputSelect.name = 'rbtPerson';
         selectCell.appendChild(inputSelect);
 
 
