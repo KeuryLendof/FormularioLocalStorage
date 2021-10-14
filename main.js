@@ -10,7 +10,8 @@ function addPerson(pid, pnombre, pciudad, pcumple, pemail){
         nombre : pnombre,
         ciudad : pciudad,
         cumpleanos : pcumple,
-        email : pemail
+        email : pemail,
+        petList : []
     }
     personas.push(newPerson);
     localStoragePersonList(personas);
@@ -30,11 +31,39 @@ function localStoragePersonList(plist){
     localStorage.setItem('localPersonList', JSON.stringify(plist));
 }
 
+//Para agregar a la mascota
+
+function encontrarPerson(pid){
+    let personObj;
+    for (let i = 0; i < personas.length; i++){
+        if (personas[i].id == pid){
+            personObj = personas[i];
+        }
+    }
+    return personObj;
+}
+
+function addMascota(ppersonObj, ppetNombre, ptype, pgender){
+    let newMascota = {
+        nombre : ppetNombre,
+        tipo : ptype,
+        gender : pgender
+    }
+    let index = personas.indexOf(ppersonObj);
+    ppersonObj.petList.push(newMascota);
+
+    personas[index] = ppersonObj;
+    localStoragePersonList(personas);
+}
+
+
 
 
 
 
 document.querySelector('#btnGuardarPersona').addEventListener('click', guardarPersona);
+document.querySelector('#btnAsignar').addEventListener('click', agregarMascota);
+
 imprimirTabla();
 
 function guardarPersona(){
@@ -85,3 +114,18 @@ function imprimirTabla(){
         
     }
 }
+
+function agregarMascota(){
+    let gNombre = document.querySelector('#txtMascota').value,
+        gAnimal = document.querySelector('#txtAnimal').value,
+        gGenero = document.querySelector('#txtGenero').value,
+        personId = document.querySelector('#friendsTable tbody input[type=radio]:checked').value;
+
+    let personObj = encontrarPerson(personId);
+
+    addMascota(personObj, gNombre, gAnimal, gGenero);
+}
+
+
+
+
