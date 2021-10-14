@@ -65,6 +65,7 @@ document.querySelector('#btnGuardarPersona').addEventListener('click', guardarPe
 document.querySelector('#btnAsignar').addEventListener('click', agregarMascota);
 
 imprimirTabla();
+imprimirMascota();
 
 function guardarPersona(){
     let gId = document.querySelector('#txtId').value,
@@ -124,6 +125,31 @@ function agregarMascota(){
     let personObj = encontrarPerson(personId);
 
     addMascota(personObj, gNombre, gAnimal, gGenero);
+    imprimirMascota();
+
+}
+
+function imprimirMascota(){
+    let list = getPersonList(),
+        tbody = document.querySelector('#animalTable tbody');
+
+    tbody.innerHTML = '';
+    //lista para recorrer amigos
+    for(let i = 0; i < list.length; i++){
+        //lista para recorrer animales de cada persona
+        for(let j = 0; j < list[i].petList.length; j++){
+            let row = tbody.insertRow(j),
+                ownerCell = row.insertCell(0),
+                nombreCell = row.insertCell(1),
+                tipoCell = row.insertCell(2),
+                generoCell = row.insertCell(3);
+
+            ownerCell.innerHTML = list[i].nombre;
+            nombreCell.innerHTML = list[i].petList[j].nombre;
+            tipoCell.innerHTML = list[i].petList[j].tipo;
+            generoCell.innerHTML = list[i].petList[j].gender;
+        }
+    }
 }
 
 
